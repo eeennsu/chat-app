@@ -1,4 +1,4 @@
-import { Button } from '@shared/shared-ui/ui/button';
+import { Button } from '@shared/shadcn-ui/ui/button';
 import Link from 'next/link';
 import { FC } from 'react';
 

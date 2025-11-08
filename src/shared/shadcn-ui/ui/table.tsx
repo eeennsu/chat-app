@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@shared/shared-ui/utils';
+import { cn } from '@shared/shadcn-ui/utils';
 import * as React from 'react';
 
 function Table({ className, ...props }: React.ComponentProps<'table'>) {

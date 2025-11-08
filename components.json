@@ -18,5 +18,7 @@
     "lib": "src/shared/shadcn-ui/utils",
     "hooks": "src/shared/shadcn-ui/hooks"
   },
-  "registries": {}
+  "registries": {
+    "@supabase": "https://supabase.com/ui/r/{name}.json"
+  }
 }

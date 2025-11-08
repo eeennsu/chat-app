@@ -1,6 +1,6 @@
 import '@configs/setup/dayjs';
 import ConfigProviders from '@shared/configs/providers';
-import { cn } from '@shared/shared-ui/utils';
+import { cn } from '@shared/shadcn-ui/utils';
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 

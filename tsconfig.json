@@ -40,7 +40,8 @@
       "@styles/*": ["src/shared/styles/*"],
       "@theme": ["src/shared/styles/theme.ts"],
       "@db/*": ["src/db/*"],
-      "dayjs": ["./src/configs/setup/dayjs.ts"]
+      "dayjs": ["./src/configs/setup/dayjs.ts"],
+      "@supabase/*": ["src/supabase/*"]
     },
     "allowJs": true,
     "incremental": true,

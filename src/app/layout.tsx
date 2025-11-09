@@ -4,6 +4,8 @@ import { cn } from '@shared/shadcn-ui/utils';
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 
+import Navbar from '@widgets/Navbar';
+
 import './globals.css';
 
 const geistSans = Geist({
@@ -54,9 +56,8 @@ export default function RootLayout({
     <html lang='ko' data-scroll-behavior='smooth'>
       <body className={cn('antialiased', geistSans.variable, geistMono.variable)}>
         <ConfigProviders>
-          <div className='flex h-dvh w-full flex-col'>
-            <main className='grow'>{children}</main>
-          </div>
+          <Navbar />
+          <main>{children}</main>
         </ConfigProviders>
       </body>
     </html>

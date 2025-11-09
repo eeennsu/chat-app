@@ -1,7 +1,8 @@
 'use client';
 
-import { createClient } from '@supabase/client';
-import { useState } from 'react';
+import { createClient } from '@services/supabase/client';
+import { cn } from '@shared/shadcn-ui/utils';
+import { ComponentPropsWithoutRef, FC, useState } from 'react';
 import { Button } from 'src/shared/shadcn-ui/ui/button';
 import {
   Card,
@@ -11,9 +12,9 @@ import {
   CardTitle,
 } from 'src/shared/shadcn-ui/ui/card';
 
-import { cn } from '../utils';
+interface IProps extends ComponentPropsWithoutRef<'div'> {}
 
-export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRef<'div'>) {
+const LoginForm: FC<IProps> = ({ className, ...props }) => {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -28,7 +29,7 @@ export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRe
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'github',
         options: {
-          redirectTo: `${window.location.origin}/auth/oauth?next=/protected`,
+          redirectTo: `${window.location.origin}/auth/oauth?next=/`,
         },
       });
 
@@ -59,4 +60,6 @@ export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRe
       </Card>
     </div>
   );
-}
+};
+
+export default LoginForm;

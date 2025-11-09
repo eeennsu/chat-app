@@ -1,4 +1,4 @@
-import { LoginForm } from 'src/shared/shadcn-ui/ui/login-form';
+import LoginForm from '@widgets/LoginForm';
 
 export default function Page() {
   return (

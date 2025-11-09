@@ -41,7 +41,7 @@
       "@theme": ["src/shared/styles/theme.ts"],
       "@db/*": ["src/db/*"],
       "dayjs": ["./src/configs/setup/dayjs.ts"],
-      "@supabase/*": ["src/supabase/*"]
+      "@services/*": ["src/services/*"]
     },
     "allowJs": true,
     "incremental": true,

@@ -1,4 +1,6 @@
-import { createClient } from '@services/supabase/server';
+'use server';
+
+import { createAdminClient } from '@services/supabase/server';
 import { getCurrentUser } from '@shared/libs/getCurrentUser';
 import { redirect } from 'next/navigation';
 
@@ -16,7 +18,8 @@ const actionCreateRoom = async (data: IParams) => {
     return { error: true, message: 'User not authenticated' };
   }
 
-  const supabase = await createClient();
+  const supabase = await createAdminClient();
+
   // supabase 의 db의 테이블 쿼리 빌더를 반환함.
   const { data: room, error: roomError } = await supabase
     .from('chat_room')
@@ -26,6 +29,7 @@ const actionCreateRoom = async (data: IParams) => {
     })
     .select('id')
     .single();
+
   if (roomError || room === null) {
     return { error: true, message: 'Failed to create room' };
   }

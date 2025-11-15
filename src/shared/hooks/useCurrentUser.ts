@@ -1,5 +1,5 @@
 import { createClient } from '@services/supabase/client';
-import { type User } from '@services/supabase/supabase-js';
+import { User } from '@supabase/supabase-js';
 import { useEffect, useState } from 'react';
 
 const useCurrentUser = () => {

@@ -33,3 +33,18 @@ export async function createClient() {
     },
   );
 }
+
+// admin은 유저를 추적하지 않음
+export async function createAdminClient() {
+  return createServerClient<Database>(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SECRET_KEY!,
+    {
+      cookies: {
+        getAll() {
+          return [];
+        },
+      },
+    },
+  );
+}

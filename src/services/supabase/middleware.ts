@@ -1,3 +1,4 @@
+import { MAIN_PATHS } from '@shared/configs/routes/mainPaths';
 import { createServerClient } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
 
@@ -57,7 +58,7 @@ export async function updateSession(request: NextRequest) {
     !request.nextUrl.pathname.startsWith('/auth')
   ) {
     const url = request.nextUrl.clone();
-    url.pathname = '/auth/login';
+    url.pathname = MAIN_PATHS.auth.login();
     return NextResponse.redirect(url);
   }
 

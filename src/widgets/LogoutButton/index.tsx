@@ -1,6 +1,7 @@
 'use client';
 
 import { createClient } from '@services/supabase/client';
+import { MAIN_PATHS } from '@shared/configs/routes/mainPaths';
 import { useRouter } from 'next/navigation';
 import { FC } from 'react';
 import { Button } from 'src/shared/shadcn-ui/ui/button';
@@ -12,7 +13,7 @@ const LogoutButton: FC = () => {
     const supabase = createClient();
     await supabase.auth.signOut();
 
-    router.push('/auth/login');
+    router.push(MAIN_PATHS.auth.login());
   };
 
   return (

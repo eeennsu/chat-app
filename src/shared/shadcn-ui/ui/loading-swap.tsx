@@ -1,6 +1,7 @@
-import { cn } from '@shared/shadcn/utils';
 import { Loader2Icon } from 'lucide-react';
 import type { ReactNode } from 'react';
+
+import { cn } from '../utils';
 
 export function LoadingSwap({
   isLoading,

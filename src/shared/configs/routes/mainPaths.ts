@@ -1,4 +1,5 @@
 // import { IPathSlug } from '@typings/commons';
+import { IPathSlug } from '@shared/typings/commons';
 
 // import { LIST_PAGE_ROUTE } from './consts';
 
@@ -6,6 +7,28 @@ export const MAIN_PATHS = {
   root: '/' as const,
   home() {
     return MAIN_PATHS.root;
+  },
+  auth: {
+    root() {
+      return MAIN_PATHS.root.concat('auth');
+    },
+    login() {
+      return MAIN_PATHS.auth.root().concat('/login');
+    },
+    register() {
+      return MAIN_PATHS.auth.root().concat('/register');
+    },
+  },
+  rooms: {
+    root() {
+      return MAIN_PATHS.root.concat('rooms');
+    },
+    new() {
+      return MAIN_PATHS.rooms.root().concat('/new');
+    },
+    slug({ slug }: IPathSlug) {
+      return MAIN_PATHS.rooms.root().concat(`/${slug}`);
+    },
   },
   // about() {
   //   return MAIN_PATHS.root.concat('about');

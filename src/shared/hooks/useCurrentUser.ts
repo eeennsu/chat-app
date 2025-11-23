@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 const useCurrentUser = () => {
   const [user, setUser] = useState<User>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
     const supabase = createClient();
@@ -14,6 +15,7 @@ const useCurrentUser = () => {
       .then(({ data }) => {
         setUser(data.user);
       })
+      .catch(err => setError(err))
       .finally(() => setIsLoading(false));
 
     // 로그인, 로그아웃, 토큰 갱신 등 auth 이벤트가 발생할 떄마다 자동 호출
@@ -26,7 +28,7 @@ const useCurrentUser = () => {
     };
   }, []);
 
-  return { user, isLoading };
+  return { user, isLoading, error };
 };
 
 export default useCurrentUser;

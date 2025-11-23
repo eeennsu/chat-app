@@ -1,5 +1,6 @@
 'use client';
 
+import { MAIN_PATHS } from '@shared/configs/routes/mainPaths';
 import useCurrentUser from '@shared/hooks/useCurrentUser';
 import { Button } from '@shared/shadcn-ui/ui/button';
 import Link from 'next/link';
@@ -19,7 +20,7 @@ const Navbar: FC = () => {
 
         {isLoading || user == null ? (
           <Button asChild>
-            <Link href='/auth/login'>Sign In</Link>
+            <Link href={MAIN_PATHS.auth.login()}>Sign In</Link>
           </Button>
         ) : (
           <div className='flex items-center gap-2'>

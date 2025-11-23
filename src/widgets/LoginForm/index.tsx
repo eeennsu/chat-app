@@ -33,6 +33,8 @@ const LoginForm: FC<IProps> = ({ className, ...props }) => {
         },
       });
 
+      console.log('error', error);
+
       if (error) throw error;
     } catch (error: unknown) {
       setError(error instanceof Error ? error.message : 'An error occurred');

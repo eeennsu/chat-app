@@ -1,33 +1,41 @@
-import { Button } from '@shared/shadcn-ui/ui/button';
-import {
-  Empty,
-  EmptyHeader,
-  EmptyContent,
-  EmptyDescription,
-  EmptyMedia,
-  EmptyTitle,
-} from '@shared/shadcn-ui/ui/empty';
-import { MessagesSquareIcon } from 'lucide-react';
-import Link from 'next/link';
+import { MAIN_PATHS } from '@shared/configs/routes/mainPaths';
+import { getCurrentUser } from '@shared/libs/getCurrentUser';
+import { redirect } from 'next/navigation';
 import { FC } from 'react';
 
-const HomePage: FC = () => {
+import getJoinedRooms from '@features/room/queries/getJoinedRooms';
+import getRooms from '@features/room/queries/getPublicRooms';
+import EmptyRoom from '@features/room/ui/EmptyRoom';
+import RoomList from '@features/room/ui/RoomList';
+
+const HomePage: FC = async () => {
+  const user = await getCurrentUser();
+  if (!user) redirect(MAIN_PATHS.auth.login());
+
+  const [publicRooms, joinedRooms] = await Promise.all([
+    getRooms({
+      isPublic: true,
+    }),
+    getJoinedRooms({
+      userId: user.id,
+    }),
+  ]);
+
   return (
     <div className='container mx-auto max-w-3xl space-y-8 px-4 py-8'>
-      <Empty className='border border-dashed'>
-        <EmptyHeader>
-          <EmptyMedia variant='icon'>
-            <MessagesSquareIcon />
-          </EmptyMedia>
-          <EmptyTitle>No Chat Rooms</EmptyTitle>
-          <EmptyDescription>Create a new chat room to get started</EmptyDescription>
-        </EmptyHeader>
-        <EmptyContent>
-          <Button asChild>
-            <Link href='rooms/new'>Create Room</Link>
-          </Button>
-        </EmptyContent>
-      </Empty>
+      {publicRooms.length === 0 && joinedRooms.length === 0 ? (
+        <EmptyRoom />
+      ) : (
+        <>
+          <RoomList title='Your Rooms' rooms={joinedRooms} isJoined />
+          <RoomList
+            title='Public Rooms'
+            rooms={publicRooms.filter(
+              publicRoom => !joinedRooms.some(joinedRoom => joinedRoom.id === publicRoom.id),
+            )}
+          />
+        </>
+      )}
     </div>
   );
 };

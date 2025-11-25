@@ -66,18 +66,21 @@ export type Database = {
         Row: {
           author_id: string;
           chat_room_id: string;
+          created_at: string | null;
           id: string;
           text: string;
         };
         Insert: {
           author_id: string;
           chat_room_id: string;
+          created_at?: string | null;
           id?: string;
           text: string;
         };
         Update: {
           author_id?: string;
           chat_room_id?: string;
+          created_at?: string | null;
           id?: string;
           text?: string;
         };

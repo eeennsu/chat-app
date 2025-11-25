@@ -15,6 +15,7 @@ export async function updateSession(request: NextRequest) {
 
   // 서버용 클라이언트 생성. 서버 런타임에서 쓰는 클라이언트임.
   // 전역변수로 두지 말고 요청마다 새로 만들어야함. 미들웨어 환경은 request가 서로 메모리를 공유할 수 있어 전역 클라이언트 재사용은 세션 누수 / 오작동 위험
+
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_OR_ANON_KEY!,

@@ -13,11 +13,12 @@ const useLeaveRoom = ({ roomId }: IParams) => {
   const router = useRouter();
 
   const leaveRoom = async () => {
-    if (!user)
+    if (!user) {
       return {
         error: true,
         message: 'User not logged in',
       };
+    }
 
     const supabase = createClient();
 

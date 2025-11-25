@@ -1,12 +1,12 @@
 import { createAdminClient } from '@services/supabase/server';
 
-import { IRoom } from '@entities/room/types';
+import { IRoomCard } from '@entities/room/types';
 
 interface IParams {
   isPublic?: boolean;
 }
 
-const getRooms = async ({ isPublic }: IParams): Promise<IRoom[]> => {
+const getRooms = async ({ isPublic }: IParams): Promise<IRoomCard[]> => {
   const supabase = await createAdminClient();
 
   const { data, error } = await supabase

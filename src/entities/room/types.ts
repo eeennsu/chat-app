@@ -4,8 +4,27 @@ import { RoomFormSchemaDto } from './contracts';
 
 export type RoomFormSchema = z.infer<typeof RoomFormSchemaDto>;
 
+export interface IRoomCard extends IRoom {
+  memberCount: number;
+}
+
 export interface IRoom {
   id: string;
   name: string;
-  memberCount: number;
+}
+export interface IRoomUser {
+  id: string;
+  name: string;
+  image_url: string | null;
+}
+
+export interface IMessage {
+  id: string;
+  text: string;
+  created_at: string;
+  author_id: string;
+  author: {
+    name: string;
+    image_url: string | null;
+  };
 }

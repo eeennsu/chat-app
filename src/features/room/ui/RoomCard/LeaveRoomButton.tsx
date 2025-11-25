@@ -13,8 +13,8 @@ const LeaveRoomButton: FC<PropsWithChildren<IProps>> = ({ roomId, ...props }) =>
   const { leaveRoom } = useLeaveRoom({ roomId });
 
   return (
-    <ActionButton {...props} requireAreYouSure action={leaveRoom}>
-      LeaveRoomButton
+    <ActionButton className='cursor-pointer' {...props} requireAreYouSure action={leaveRoom}>
+      Leave
     </ActionButton>
   );
 };

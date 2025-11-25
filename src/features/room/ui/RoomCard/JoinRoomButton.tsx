@@ -14,7 +14,7 @@ const JoinRoomButton: FC<PropsWithChildren<IProps>> = ({ roomId, ...props }) => 
 
   return (
     <ActionButton {...props} action={joinRoom}>
-      JoinRoomButton
+      Join Room
     </ActionButton>
   );
 };

@@ -22,7 +22,7 @@ const HomePage: FC = async () => {
   ]);
 
   return (
-    <div className='container mx-auto max-w-3xl space-y-8 px-4 py-8'>
+    <div className='container mx-auto max-w-3xl space-y-10 px-4 py-8'>
       {publicRooms.length === 0 && joinedRooms.length === 0 ? (
         <EmptyRoom />
       ) : (

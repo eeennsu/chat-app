@@ -8,7 +8,7 @@ import { ROOM_TOAST_MESSAGES } from '@entities/room/consts';
 import { RoomFormSchemaDto } from '@entities/room/contracts';
 import { RoomFormSchema } from '@entities/room/types';
 
-import actionCreateRoom from '../actions/create';
+import actCreateRoom from '../actions/create';
 
 const useCreateRoomForm = () => {
   const form = useForm<RoomFormSchema>({
@@ -20,7 +20,7 @@ const useCreateRoomForm = () => {
   });
 
   const onSubmit = form.handleSubmit(async (data: RoomFormSchema) => {
-    const { error, message } = await actionCreateRoom(data);
+    const { error, message } = await actCreateRoom(data);
 
     if (error) {
       toast.error(ROOM_TOAST_MESSAGES.CREATE_FAILED, { description: message });

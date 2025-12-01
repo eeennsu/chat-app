@@ -9,7 +9,7 @@ import { RoomFormSchema } from '@entities/room/types';
 
 interface IParams extends RoomFormSchema {}
 
-const actionCreateRoom = async (data: IParams) => {
+const actCreateRoom = async (data: IParams) => {
   const { success, data: parsedData } = RoomFormSchemaDto.safeParse(data);
   if (!success) return { error: true, message: 'Invalid room data' };
 
@@ -46,4 +46,4 @@ const actionCreateRoom = async (data: IParams) => {
   redirect(`/rooms/${room.id}`);
 };
 
-export default actionCreateRoom;
+export default actCreateRoom;

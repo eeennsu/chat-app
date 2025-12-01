@@ -87,3 +87,18 @@ export interface IPageParams {
 export type ProductData<T> = Partial<T> & {
   image: string;
 };
+
+type SuccessResponse<T> = {
+  error: false;
+  message?: string; // 성공 메시지가 필요할 때
+  data: T;
+};
+
+type ErrorResponse = {
+  error: true;
+  message: string;
+  data?: null;
+};
+
+export type IResponse<T> = SuccessResponse<T> | ErrorResponse;
+export type StatusType = 'pending' | 'error' | 'success';

@@ -97,7 +97,7 @@ importers:
         specifier: ^0.7.0
         version: 0.7.0(@supabase/supabase-js@2.81.1)
       '@supabase/supabase-js':
-        specifier: ^2.80.0
+        specifier: ^2.76.1
         version: 2.81.1
       class-variance-authority:
         specifier: ^0.7.1
@@ -218,7 +218,7 @@ importers:
         specifier: ^0.7.1
         version: 0.7.1(@trivago/prettier-plugin-sort-imports@5.2.2(prettier@3.6.2))(prettier@3.6.2)
       supabase:
-        specifier: ^2.54.11
+        specifier: ^2.53.6
         version: 2.54.11
       tailwindcss:
         specifier: ^4

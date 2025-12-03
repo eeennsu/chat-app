@@ -1,22 +1,16 @@
-import { DATE_FORMATTER } from '@shared/libs/date';
+import { dateFormatDetail } from '@shared/libs/date';
 import { cn } from '@shared/shadcn-ui/utils';
-import { StatusType } from '@shared/typings/commons';
 import { User2Icon } from 'lucide-react';
 import Image from 'next/image';
-import { Ref } from 'react';
+import { FC, Ref } from 'react';
 
-import { IMessage } from '@entities/room/types';
+import { ISentMessage } from '@entities/room/types';
 
-export function ChatMessage({
-  text,
-  author,
-  created_at,
-  status,
-  ref,
-}: IMessage & {
-  status?: StatusType;
+interface IProps extends ISentMessage {
   ref?: Ref<HTMLDivElement>;
-}) {
+}
+
+const ChatMessage: FC<IProps> = ({ text, author, created_at, status, ref }) => {
   return (
     <div
       ref={ref}
@@ -27,7 +21,7 @@ export function ChatMessage({
       )}
     >
       <div className='shrink-0'>
-        {author?.image_url  ? (
+        {author?.image_url ? (
           <Image
             src={author?.image_url}
             alt={author?.name}
@@ -44,12 +38,12 @@ export function ChatMessage({
       <div className='grow space-y-0.5'>
         <div className='flex items-baseline gap-2'>
           <span className='text-sm font-semibold'>{author?.name}</span>
-          <span className='text-muted-foreground text-xs'>
-            {DATE_FORMATTER.format(new Date(created_at))}
-          </span>
+          <span className='text-muted-foreground text-xs'>{dateFormatDetail(created_at)}</span>
         </div>
         <p className='wrap-break-words text-sm whitespace-pre'>{text}</p>
       </div>
     </div>
   );
-}
+};
+
+export default ChatMessage;

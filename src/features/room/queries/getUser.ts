@@ -1,4 +1,4 @@
-import { createClient } from '@services/supabase/server';
+import { createAdminClient } from '@services/supabase/server';
 import { getCurrentUser } from '@shared/libs/getCurrentUser';
 import { Nullable } from '@shared/typings/commons';
 
@@ -6,7 +6,7 @@ import { IRoomUser } from '@entities/room/types';
 
 const getUser = async (): Promise<Nullable<IRoomUser>> => {
   const user = await getCurrentUser();
-  const supabase = await createClient();
+  const supabase = await createAdminClient();
 
   const { data, error } = await supabase
     .from('user_profile')

@@ -7,11 +7,12 @@ import { IResponse } from '@shared/typings/commons';
 import { IMessage } from '@entities/room/types';
 
 interface IParams {
+  id: string;
   roomId: string;
   text: string;
 }
 
-const actSendMessage = async ({ roomId, text }: IParams): Promise<IResponse<IMessage>> => {
+const actSendMessage = async ({ id, roomId, text }: IParams): Promise<IResponse<IMessage>> => {
   const user = await getCurrentUser();
   if (user === null) {
     return {
@@ -39,6 +40,7 @@ const actSendMessage = async ({ roomId, text }: IParams): Promise<IResponse<IMes
   const { data: message, error: messageError } = await supabase
     .from('message')
     .insert({
+      id,
       chat_room_id: roomId,
       author_id: user.id,
       text,
@@ -52,7 +54,6 @@ const actSendMessage = async ({ roomId, text }: IParams): Promise<IResponse<IMes
       message: 'Failed to send message',
     };
   }
-
 
   return {
     error: false,

@@ -1,9 +1,14 @@
-import type { FC } from 'react';
+'use client';
 
-import { IMessage, IRoom, IRoomUser } from '@entities/room/types';
+import dayjs from 'dayjs';
+import { useState, type FC } from 'react';
+
+import useRealTimeChat from '@features/room/hooks/useRealTimeChat';
+
+import { IMessage, IRoom, IRoomUser, ISentMessage } from '@entities/room/types';
 
 import ChatInput from '../ChatInput';
-import { ChatMessage } from '../ChatInput/ChatMessage';
+import ChatMessage from '../ChatInput/ChatMessage';
 
 interface IProps {
   room: IRoom;
@@ -11,14 +16,53 @@ interface IProps {
   messages: IMessage[];
 }
 
-const RoomClient: FC<IProps> = ({ room, messages }) => {
+const RoomClient: FC<IProps> = ({ room, messages, user }) => {
+  const { connectedUsersCnt, messages: realTimeMessages } = useRealTimeChat({
+    userId: user.id,
+    roomId: room.id,
+  });
+
+  const [sentMessages, setSentMessages] = useState<ISentMessage[]>([]);
+
+  const visibleMessages = messages.toReversed().concat(
+    realTimeMessages,
+    sentMessages.filter(m => !realTimeMessages.find(rm => rm.id === m.id)),
+  );
+
+  const onSendMessage = (message: IMessage) => {
+    if (!message) return;
+
+    setSentMessages(prev => [
+      ...prev,
+      {
+        id: message.id,
+        created_at: dayjs().toISOString(),
+        text: message.text,
+        author_id: user.id,
+        author: {
+          name: user.name,
+          image_url: user.image_url,
+        },
+        status: 'pending',
+      },
+    ]);
+  };
+
+  const onSuccessfulSend = (id: string) => {
+    setSentMessages(prev => prev.map(m => (m.id === id ? { ...m, status: 'success' } : m)));
+  };
+
+  const onErrorSend = (id: string) => {
+    setSentMessages(prev => prev.map(m => (m.id === id ? { ...m, status: 'error' } : m)));
+  };
+
   return (
     <div className='h-screen-with-header container mx-auto flex flex-col border border-y-0'>
       <div className='flex items-center justify-between gap-2 p-4'>
         <div className='border-b'>
           <h1 className='text-2xl font-bold'>{room.name}</h1>
           <p className='text-muted-foreground text-sm'>
-            {/* {connectedUsers} {connectedUsers === 1 ? 'user' : 'users'} online */}
+            {connectedUsersCnt} {connectedUsersCnt === 1 ? 'user' : 'users'} online
           </p>
         </div>
         {/* <InviteUserModal roomId={room.id} /> */}
@@ -31,7 +75,7 @@ const RoomClient: FC<IProps> = ({ room, messages }) => {
         }}
       >
         <div>
-          {messages.toReversed().map(message => (
+          {visibleMessages.toReversed().map(message => (
             <ChatMessage key={message.id} {...message} />
           ))}
         </div>
@@ -60,30 +104,9 @@ const RoomClient: FC<IProps> = ({ room, messages }) => {
       </div>
       <ChatInput
         roomId={room?.id}
-        // onSend={message => {
-        //   setSentMessages(prev => [
-        //     ...prev,
-        //     {
-        //       id: message.id,
-        //       text: message.text,
-        //       created_at: new Date().toISOString(),
-        //       author_id: user.id,
-        //       author: {
-        //         name: user.name,
-        //         image_url: user.image_url,
-        //       },
-        //       status: 'pending',
-        //     },
-        //   ]);
-        // }}
-        // onSuccessfulSend={message => {
-        //   setSentMessages(prev =>
-        //     prev.map(m => (m.id === message.id ? { ...message, status: 'success' } : m)),
-        //   );
-        // }}
-        // onErrorSend={id => {
-        //   setSentMessages(prev => prev.map(m => (m.id === id ? { ...m, status: 'error' } : m)));
-        // }}
+        onSendMessage={onSendMessage}
+        onSuccessfulSend={onSuccessfulSend}
+        onErrorSend={onErrorSend}
       />
     </div>
   );

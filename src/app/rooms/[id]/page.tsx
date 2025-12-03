@@ -2,7 +2,7 @@ import type {} from 'next';
 import { notFound } from 'next/navigation';
 import type { FC } from 'react';
 
-import getMessage from '@features/room/queries/getMessages';
+import getMessages from '@features/room/queries/getMessages';
 import getRoom from '@features/room/queries/getRoom';
 import getUser from '@features/room/queries/getUser';
 import RoomClient from '@features/room/ui/RoomClient';
@@ -16,7 +16,7 @@ const DetailRoomPage: FC<IParams> = async ({ params }) => {
   const [room, user, messages] = await Promise.all([
     getRoom({ chatRoomId: id }),
     getUser(),
-    getMessage({ chatRoomId: id }),
+    getMessages({ chatRoomId: id }),
   ]);
 
   if (room === null || user === null) return notFound();

@@ -1,4 +1,4 @@
-export const DATE_FORMATTER = new Intl.DateTimeFormat(undefined, {
-  dateStyle: 'short',
-  timeStyle: 'short',
-});
+import dayjs from '@configs/setup/dayjs';
+
+export const dateFormatDetail = (date: string) =>
+  dayjs.utc(date).tz().format('YYYY-MM-DD HH:mm:ss');

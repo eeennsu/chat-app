@@ -23,8 +23,6 @@ const useJoinRoom = ({ roomId }: IParams) => {
       member_id: user.id,
     });
 
-    console.error('error:', error);
-
     if (error) return { error: true, message: 'Failed to join Room' };
 
     router.push(MAIN_PATHS.rooms.slug({ slug: roomId }));

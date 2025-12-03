@@ -1,3 +1,4 @@
+import { StatusType } from '@shared/typings/commons';
 import z from 'zod';
 
 import { RoomFormSchemaDto } from './contracts';
@@ -27,4 +28,8 @@ export interface IMessage {
     name: string;
     image_url: string | null;
   };
+}
+
+export interface ISentMessage extends IMessage {
+  status?: StatusType;
 }

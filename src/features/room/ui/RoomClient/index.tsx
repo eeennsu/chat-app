@@ -1,14 +1,17 @@
 'use client';
 
+import { Button } from '@shared/shadcn-ui/ui/button';
 import dayjs from 'dayjs';
 import { useState, type FC } from 'react';
 
+import useInfiniteScrollChat from '@features/room/hooks/useInfiniteScrollChat';
 import useRealTimeChat from '@features/room/hooks/useRealTimeChat';
 
 import { IMessage, IRoom, IRoomUser, ISentMessage } from '@entities/room/types';
 
 import ChatInput from '../ChatInput';
 import ChatMessage from '../ChatInput/ChatMessage';
+import InviteUserModal from '../InviteUserModal';
 
 interface IProps {
   room: IRoom;
@@ -22,9 +25,19 @@ const RoomClient: FC<IProps> = ({ room, messages, user }) => {
     roomId: room.id,
   });
 
+  const {
+    messages: oldMessages,
+    status,
+    loadMoreMessages,
+    triggerQueryRef,
+  } = useInfiniteScrollChat({
+    roomId: room.id,
+    startingMessages: messages.toReversed(),
+  });
+
   const [sentMessages, setSentMessages] = useState<ISentMessage[]>([]);
 
-  const visibleMessages = messages.toReversed().concat(
+  const visibleMessages = oldMessages.concat(
     realTimeMessages,
     sentMessages.filter(m => !realTimeMessages.find(rm => rm.id === m.id)),
   );
@@ -65,7 +78,7 @@ const RoomClient: FC<IProps> = ({ room, messages, user }) => {
             {connectedUsersCnt} {connectedUsersCnt === 1 ? 'user' : 'users'} online
           </p>
         </div>
-        {/* <InviteUserModal roomId={room.id} /> */}
+        <InviteUserModal roomId={room.id} />
       </div>
       <div
         className='flex grow flex-col-reverse overflow-y-auto'
@@ -75,11 +88,15 @@ const RoomClient: FC<IProps> = ({ room, messages, user }) => {
         }}
       >
         <div>
-          {visibleMessages.toReversed().map(message => (
-            <ChatMessage key={message.id} {...message} />
+          {visibleMessages.toReversed().map((message, index) => (
+            <ChatMessage
+              key={message.id}
+              {...message}
+              ref={index === 0 && status === 'idle' ? triggerQueryRef : null}
+            />
           ))}
         </div>
-        {/* <div>
+        <div>
           {status === 'loading' && (
             <p className='text-muted-foreground py-2 text-center text-sm'>
               Loading more messages...
@@ -100,7 +117,7 @@ const RoomClient: FC<IProps> = ({ room, messages, user }) => {
               ref={index === 0 && status === 'idle' ? triggerQueryRef : null}
             />
           ))}
-        </div> */}
+        </div>
       </div>
       <ChatInput
         roomId={room?.id}

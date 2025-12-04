@@ -1,7 +1,7 @@
 import { StatusType } from '@shared/typings/commons';
 import z from 'zod';
 
-import { RoomFormSchemaDto } from './contracts';
+import { InviteUserFormSchemaDto, RoomFormSchemaDto } from './contracts';
 
 export type RoomFormSchema = z.infer<typeof RoomFormSchemaDto>;
 
@@ -33,3 +33,5 @@ export interface IMessage {
 export interface ISentMessage extends IMessage {
   status?: StatusType;
 }
+
+export type InviteUserFormSchema = z.infer<typeof InviteUserFormSchemaDto>;

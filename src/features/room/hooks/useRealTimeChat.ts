@@ -75,8 +75,9 @@ const useRealTimeChat = ({ userId, roomId }: IParams) => {
     return () => {
       cancel = true;
 
-      newChannel?.untrack();
-      newChannel?.unsubscribe();
+      if (!newChannel) return;
+      newChannel.untrack();
+      newChannel.unsubscribe();
     };
   }, [roomId, userId]);
 
